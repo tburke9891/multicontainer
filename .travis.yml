@@ -5,11 +5,11 @@ services:
 
 # before tests, verify build
 before_install:
-  -docker build -t thomasburke9891/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t thomasburke9891/react-test -f ./client/Dockerfile.dev ./client
 
 # must pass exit code 0, otherwise travis will think it failed
-## script:
-##  - docker run -e CI=true thomasburke9891/react-test npm test
+ script:
+  - docker run -e CI=true thomasburke9891/react-test npm test
 
 # after tests pass, build production instances
 after_success:
