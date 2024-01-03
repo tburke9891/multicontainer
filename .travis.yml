@@ -2,15 +2,12 @@ language: generic
 sudo: required
 services:
   - docker
-
 # before tests, verify docker build
 before_install:
   - docker build -t thomasburke9891/react-test -f ./client/Dockerfile.dev ./client
-
 # must pass exit code 0, otherwise travis will think it failed
  script:
   - docker run -e CI=true thomasburke9891/react-test npm test
-
 # after tests pass, build production instances
 after_success:
   - docker build -t thomasburke9891/multi-client ./client
