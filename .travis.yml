@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 
-# before tests, verify build
+# before tests, verify docker build
 before_install:
   - docker build -t thomasburke9891/react-test -f ./client/Dockerfile.dev ./client
 
