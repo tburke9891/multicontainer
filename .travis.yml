@@ -27,10 +27,9 @@ deploy:
   region: 'us-east-1'
   app: 'multi-docker'
   env: 'Multi-docker-env'
-  bucket_name: 'elasticbeanstalk-us-east-1-915955328185'
+  bucket: 'elasticbeanstalk-us-east-1-915955328185'
   bucket_path: 'docker-multi'
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: 
-    secure: $AWS_SECRET_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
