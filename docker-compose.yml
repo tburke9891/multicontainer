@@ -25,6 +25,9 @@ services:
       - REDIS_PORT=$REDIS_PORT
   nginx:
     image: "thomasburke9891/multi-nginx"
+    depends_on:
+      - api
+      - client
     mem_limit: 128m
     hostname: nginx
     ports:

@@ -5,7 +5,7 @@ services:
 # before tests, verify docker build
 before_install:
   - docker build -t thomasburke9891/react-test -f ./client/Dockerfile.dev ./client
-# must pass exit code 0, otherwise travis will think it failed
+# must pass exit code 0, otherwise travisCI will think it failed
  script:
   - docker run -e CI=true thomasburke9891/react-test npm test
 # after tests pass, build production instances
@@ -21,3 +21,16 @@ after_success:
   - docker push thomasburke9891/multi-nginx
   - docker push thomasburke9891/multi-server
   - docker push thomasburke9891/multi-worker
+# deploy config for travis to AWS
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'Multi-docker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-915955328185'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: 
+    secure: $AWS_SECRET_KEY
