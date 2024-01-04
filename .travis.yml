@@ -1,26 +1,20 @@
 sudo: required
 services:
   - docker
-# before tests, verify docker build
 before_install:
   - docker build -t thomasburke9891/react-test -f ./client/Dockerfile.dev ./client
-# must pass exit code 0, otherwise travisCI will think it failed
  script:
   - docker run -e CI=true thomasburke9891/react-test npm test
-# after tests pass, build production instances
 after_success:
   - docker build -t thomasburke9891/multi-client ./client
   - docker build -t thomasburke9891/multi-nginx ./nginx
   - docker build -t thomasburke9891/multi-server ./server
   - docker build -t thomasburke9891/multi-worker ./worker
-# log into the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-# take images above and push to hub.docker.com
   - docker push thomasburke9891/multi-client
   - docker push thomasburke9891/multi-nginx
   - docker push thomasburke9891/multi-server
   - docker push thomasburke9891/multi-worker
-# deploy config for travis to AWS
 deploy:
   provider: elasticbeanstalk
   region: 'us-east-1'
